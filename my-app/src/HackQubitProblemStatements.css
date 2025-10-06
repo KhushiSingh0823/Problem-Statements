@@ -15,6 +15,7 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden; /* ✅ Prevent body overflow */
 }
 
 /* === HEADER === */
@@ -32,22 +33,18 @@ body {
   content: "";
   width: 100px;
   height: 3px;
-  background-color: #e10600; /* F1 red stripe */
+  background-color: #e10600;
   display: block;
   margin: 0.8rem auto 0;
 }
 
-/* === HERO SECTION (Simplified) === */
+/* === HERO SECTION === */
 .hero-text {
   text-align: center;
   margin: 3rem auto 4rem;
   max-width: 900px;
-  padding: 0; /* No card-like padding */
-  background: none; /* Remove background */
-  border-radius: 0; /* Remove rounded corners */
-  box-shadow: none; /* Remove shadow */
-  border: none; /* Remove border */
-  color: #f0f0f0; /* Keep text visible */
+  padding: 0;
+  color: #f0f0f0;
   line-height: 1.8;
   font-size: 1.1rem;
 }
@@ -68,21 +65,41 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* === CATEGORY BUTTONS === */
-.category-buttons {
+/* === CATEGORY CONTAINER WITH SCROLL === */
+.category-container {
+  width: 100%;
+  overflow-x: hidden; /* ✅ Hide outer overflow */
   display: flex;
   justify-content: center;
-  flex-wrap: nowrap; 
-  gap: 1rem;
   margin-bottom: 3rem;
-  overflow-x: auto; 
+}
+
+.category-buttons {
+  display: flex;
+  gap: 0.8rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  flex-wrap: nowrap;
   padding: 0 1rem;
+  max-width: 100vw; /* ✅ Prevent extending past screen */
+}
+
+/* ✅ Hide visible scrollbar, but keep scroll functional */
+.category-buttons::-webkit-scrollbar {
+  display: none;
+}
+.category-buttons {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
 }
 
 .category-button {
-  padding: 0.5rem 1.4rem; 
-  font-size: 0.85rem;
-  border-radius: 4px; 
+  flex: 0 0 auto;
+  padding: 0.6rem 1.5rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
   font-weight: 600;
   border: 1px solid #2a2a2a;
   background-color: #151515;
@@ -90,7 +107,7 @@ body {
   cursor: pointer;
   text-transform: uppercase;
   transition: all 0.25s ease;
-  margin-right: 0.7rem; /* spacing between buttons */
+  white-space: nowrap;
 }
 
 .category-button:hover {
@@ -109,7 +126,7 @@ body {
 .category-section {
   width: 95%;
   max-width: 1100px;
-  margin: 2rem auto 3rem; 
+  margin: 2rem auto 3rem;
   padding: 2rem;
   background-color: #101010;
   border: 1px solid #1c1c1c;
@@ -136,7 +153,7 @@ body {
   border-radius: 6px;
   margin-bottom: 1.5rem;
   transition: all 0.3s ease;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 .problem-card:hover {
@@ -155,42 +172,7 @@ body {
   font-size: 0.95rem;
   color: #c0c0c0;
   line-height: 1.6;
-  margin-bottom: 0.8rem; 
-}
-
-/* === PROBLEM CARD DETAILS === */
-.problem-card .section-heading {
-  font-weight: 600;
-  color: #fff;
-  margin-bottom: 0.3rem;
-}
-
-.problem-card .section-text {
-  color: #c0c0c0;
-  margin-bottom: 1rem;
-}
-
-/* === READ MORE / LESS BUTTON === */
-.read-more-btn {
-  display: inline-block;
-  margin-top: 0.5rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #e10600;
-  cursor: pointer;
-  text-transform: uppercase;
-  border: none;
-  background: none;
-  transition: all 0.2s ease;
-}
-
-.read-more-btn:hover {
-  color: #ff2a2a;
-}
-
-/* collapsed text */
-.collapsed {
-  display: none;
+  margin-bottom: 0.8rem;
 }
 
 /* === FOOTER SPACING === */
@@ -214,10 +196,33 @@ html {
   25%, 75% { opacity: 0; }
 }
 
-/* Disable text selection */
 .no-select {
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+}
+
+.footer-container {
+  width: 100%;
+  background-color: #0b0b0c; /* solid black */
+  padding: 1rem 0; /* compact height */
+  text-align: center;
+  border-top: 3px solid #e10600; /* F1 red accent line */
+}
+
+.footer-container p {
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+/* Responsive font */
+@media (min-width: 768px) {
+  .footer-container p {
+    font-size: 1rem;
+  }
 }
